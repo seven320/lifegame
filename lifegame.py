@@ -3,11 +3,11 @@
 import numpy as np
 import time
 
-X=10
-Y=10
+#初期設定
+X=40
+Y=40
 
 A=np.zeros((X,Y))
-# print(a[0])
 
 def cell_update(x,y,a):
     count=0
@@ -64,6 +64,28 @@ def status__update(A):
         for j in range(Y):
             b[i][j]=cell_update(i,j,A)
     return b
+
+def printlife(A):#表示機能
+    X=len(A[0])
+    Y=len(A[1])
+    for i in range(len(A[0])):
+        for j in range(len(A[1])):
+            if A[i][j]==1:
+                print(" ■",end="")
+            else:
+                print(" □",end="")
+        print("")
+    print("")
+    return 0
+
+def load_life(life):
+    if len(life)%2==0:
+        for i in range(int(len(life)/2)):
+            A[life[2*i]][life[2*i+1]]=1
+    else:
+        print("error:入力が奇数個です。")
+    return A
+
 # a[0][0]=1
 # a[1][0]=1
 # a[0][1]=1
@@ -72,24 +94,30 @@ def status__update(A):
 # a[3][2]=1
 # a[3][0]=1
 
-A[3][4]=1
-A[3][5]=1
-A[4][4]=1
-A[4][5]=1
-A[5][6]=1
-A[5][7]=1
-A[6][6]=1
-A[6][7]=1
-print(A)
+#ビーコン
+# A[3][4]=1
+# A[3][5]=1
+# A[4][4]=1
+# A[4][5]=1
+# A[5][6]=1
+# A[5][7]=1
+# A[6][6]=1
+# A[6][7]=1
+
+#グライダー
+# A[1][2]=1
+# A[2][3]=1
+# A[3][1]=1
+# A[3][2]=1
+# A[3][3]=1
+
+#グライダー銃
+life=[1,25,2,23,2,25,3,13,3,14,3,21,3,22,3,35,3,36,4,12,4,16,4,21,4,22,4,35,4,36,5,1,5,2,5,11,5,17,5,21,5,22,6,1,6,2,6,11
+,6,15,6,17,6,18,6,23,6,25,7,11,7,17,7,25,8,12,8,16,9,13,9,14]
+load_life(life)
+
+printlife(A)
 while True:
     A=status__update(A)
-    time.sleep(1)
-    # if b.any==False:#全滅のとき終了
-    #     print(b)
-    #     print("全滅のため終了")
-        # break
-    # elif np.all(a==b):
-    #     print(b)
-    #     print("変化なしのため終了")
-    #     break
-    print(A)
+    time.sleep(0.25)
+    printlife(A)
