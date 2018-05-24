@@ -56,8 +56,8 @@ def cell_update(x,y,a):
     else:pass
     return status
 
-def status__update(A):
-    b=np.zeros((len(A[0]),len((A[1]))))#なんでこれで正しく動く？
+def status__update(A):#A.shape
+    b=np.zeros(A.shape)#なんでこれで正しく動く？場所引き渡しを行っているため
     X=len(A[0])
     Y=len(A[1])
     for i in range(X):
@@ -66,8 +66,7 @@ def status__update(A):
     return b
 
 def printlife(A):#表示機能
-    X=len(A[0])
-    Y=len(A[1])
+    X,Y=A.shape
     for i in range(len(A[0])):
         for j in range(len(A[1])):
             if A[i][j]==1:
@@ -120,4 +119,5 @@ printlife(A)
 while True:
     A=status__update(A)
     time.sleep(0.25)
+    # time.sleep(0.01)
     printlife(A)
