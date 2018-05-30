@@ -24,8 +24,6 @@ def cell_update(x,y,a):
                     else:
                         if a[len(a[0])-1][y+j]==1:
                             count+=1
-                        else:
-                            pass
                 elif x+i>=len(a[0]):
                     if y+j<0 or y+j>=len(a[1]):#角
                         pass
@@ -53,7 +51,6 @@ def cell_update(x,y,a):
         elif count>=4:#過密
             status=0
         else:print("error")
-    else:pass
     return status
 
 def status__update(A):#A.shape
