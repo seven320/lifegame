@@ -4,38 +4,38 @@ import pygame
 from pygame.locals import *
 import sys,os
 import numpy as np
+import time
 
-A=np.zeros((40,40))
-def main_3():
-    pygame.init()
-    screen=pygame.display.set_mode((400,300))
-    pygame.display.set_caption("Test")#title bar
-
-    while(1):
-        screen.fill((0,0,0))
-        pygame.display.update()
-        #イベント処理
-        for event in pygame.event.get():
-            if event.type==QUIT:
-                pygame.quit()
-                sys.exit()
-
-def main_2():
-    pygame.init()
-    screen=pygame.display.set_mode((400,300))
-    pygame.display.set_caption("GAME")
-
-    while(1):
-        screen.fill((0,0,0))
-        pygame.draw.line(screen,(0,95,0), (100,0), (100,300), 1)
-        pygame.draw.rect(screen,(0,80,0),Rect(10,10,80,50),5)
-        pygame.draw.rect(screen,(0,80,0),Rect(20,20,30,40))
-        pygame.display.update()
-        #イベント処理
-        for event in pygame.event.get():
-            if event.type==QUIT:
-                pygame.quit()
-                sys.exit()
+# def main_3():
+#     pygame.init()
+#     screen=pygame.display.set_mode((400,300))
+#     pygame.display.set_caption("Test")#title bar
+#
+#     while(1):
+#         screen.fill((0,0,0))
+#         pygame.display.update()
+#         #イベント処理
+#         for event in pygame.event.get():
+#             if event.type==QUIT:
+#                 pygame.quit()
+#                 sys.exit()
+#
+# def main_2():
+#     pygame.init()
+#     screen=pygame.display.set_mode((400,300))
+#     pygame.display.set_caption("GAME")
+#
+#     while(1):
+#         screen.fill((0,0,0))
+#         pygame.draw.line(screen,(0,95,0), (100,0), (100,300), 1)
+#         pygame.draw.rect(screen,(0,80,0),Rect(10,10,80,50),5)
+#         pygame.draw.rect(screen,(0,80,0),Rect(20,20,30,40))
+#         pygame.display.update()
+#         #イベント処理
+#         for event in pygame.event.get():
+#             if event.type==QUIT:
+#                 pygame.quit()
+#                 sys.exit()
 
 def cell_update(x,y,a):
     count=0
@@ -110,14 +110,11 @@ def load_life(life,A):
         print("error:入力が奇数個です。")
     return A
 
-#グライダー銃
-life=[1,25,2,23,2,25,3,13,3,14,3,21,3,22,3,35,3,36,4,12,4,16,4,21,4,22,4,35,4,36,5,1,5,2,5,11,5,17,5,21,5,22,6,1,6,2,6,11
-,6,15,6,17,6,18,6,23,6,25,7,11,7,17,7,25,8,12,8,16,9,13,9,14]
-load_life(life,A)
+
 def main():
     X=600
     Y=600
-    cell_size=15
+    cell_size=10
     pygame.init()
     screen=pygame.display.set_mode((X,Y))
     pygame.display.set_caption("LIFE GAME")
@@ -125,16 +122,27 @@ def main():
     # printlife(A)
     # b=status__update(A)
     # printlife(b)
+    #グライダー銃
+    life=[1,25,2,23,2,25,3,13,3,14,3,21,3,22,3,35,3,36,4,12,4,16,4,21,4,22,4,35,4,36,5,1,5,2,5,11,5,17,5,21,5,22,6,1,6,2,6,11
+    ,6,15,6,17,6,18,6,23,6,25,7,11,7,17,7,25,8,12,8,16,9,13,9,14]
+    # life=[0,0,1,1,1,0,0,1]
+    A=load_life(life,A)
     while(1):
         screen.fill((0,0,0))
         #vertical line
         for i in range(int(X/cell_size)):
-            pygame.draw.line(screen,(0,95,0),(i*cell_size,0),(i*cell_size,Y),2)
+            pygame.draw.line(screen,(0,95,0),(i*cell_size,0),(i*cell_size,Y),1)
         #horizontal line
         for j in range(int(Y/cell_size)):
-            pygame.draw.line(screen,(0,95,0),(0,j*cell_size),(X,j*cell_size),2)
+            pygame.draw.line(screen,(0,95,0),(0,j*cell_size),(X,j*cell_size),1)
+        y,x=np.where(A==1)
+        for k in range(x.size):
+            # print(x[k],y[k])
+            pygame.draw.rect(screen,(0,95,0),(x[k]*cell_size,y[k]*cell_size,cell_size,cell_size))
+            #最初の２変数はx,y座標、後ろの２変数は長方形のサイズ
+        # printlife(A)
         A=status__update(A)
-        
+        # time.sleep(10)
         pygame.display.update()
         for event in pygame.event.get():
             if event.type==QUIT:
