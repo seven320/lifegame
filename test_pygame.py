@@ -79,6 +79,7 @@ def load_life(life,A):
 
 def main():
     state=False
+    button=False
     X=600
     Y=600
     cell_size=8
@@ -111,7 +112,6 @@ def main():
 
     A=load_life(life,A)
     while(1):
-
         screen.fill((0,0,0))
         #vertical line
         for i in range(int(X/cell_size)):
@@ -119,13 +119,19 @@ def main():
         #horizontal line
         for j in range(int(Y/cell_size)):
             pygame.draw.line(screen,(0,95,0),(0,j*cell_size),(X,j*cell_size),1)
-
-
+        #イベント処理
         for event in pygame.event.get():
             #カーソル操作時
             if event.type==MOUSEBUTTONDOWN and event.button==1:
                 x_pix,y_pix=event.pos
                 A[y_pix//cell_size][x_pix//cell_size]=not(A[y_pix//cell_size][x_pix//cell_size])
+                button=True
+            if event.type==MOUSEBUTTONUP and event.button==1:
+                button=False
+            if  event.type==MOUSEMOTION and button==True:
+                x_pix,y_pix=event.pos
+                A[y_pix//cell_size][x_pix//cell_size]=1
+                # not(A[y_pix//cell_size][x_pix//cell_size])
             #終了用イベント
             if event.type==QUIT:
                 pygame.quit()
@@ -147,6 +153,7 @@ def main():
                 if event.key==K_7:pass
                 if event.key==K_8:pass
                 if event.key==K_9:pass
+                if event.key==K_0: A=np.zeros((A.shape))
                 #pause機能
                 if event.key==pygame.K_SPACE: state=not(state)
         #cell表示
