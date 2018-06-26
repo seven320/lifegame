@@ -82,7 +82,7 @@ def main():
     button=False
     X=600
     Y=600
-    cell_size=8
+    cell_size=6
     pygame.init()
     screen=pygame.display.set_mode((X,Y))
     pygame.display.set_caption("LIFE GAME")
@@ -167,7 +167,6 @@ def main():
         if state==0: A=status__update(A)
         #pause
         elif state==1:pass
-
 
 if __name__=="__main__":
     main()
