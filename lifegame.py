@@ -5,6 +5,7 @@ from pygame.locals import *
 import sys,os
 import numpy as np
 import time
+import convert
 
 def cell_update(x,y,a):
     count=0
@@ -70,11 +71,9 @@ def printlife(A):#表示機能
     return 0
 
 def load_life(life,A):
-    if len(life)%2==0:
-        for i in range(int(len(life)/2)):
-            A[life[2*i]][life[2*i+1]]=1
-    else:
-        print("error:入力が奇数個です。")
+    for i in range(len(life)):
+        x,y=life[i]
+        A[x,y]=1
     return A
 
 def main():
@@ -90,25 +89,23 @@ def main():
 
     #life_game　図鑑　wikipedia参照　https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0
     #グライダー銃
-    life=[1,25,2,23,2,25,3,13,3,14,3,21,3,22,3,35,3,36,4,12,4,16,4,21,4,22,4,35,4,36,5,1,5,2,5,11,5,17,5,21,5,22,6,1,6,2,6,11
-    ,6,15,6,17,6,18,6,23,6,25,7,11,7,17,7,25,8,12,8,16,9,13,9,14]
+    life=[[1,25],[2,23],[2,25],[3,13],[3,14],[3,21],[3,22],[3,35],[3,36],[4,12],[4,16],[4,21],[4,22],\
+    [4,35],[4,36],[5,1],[5,2],[5,11],[5,17],[5,21],[5,22],[6,1],[6,2],[6,11],[6,15],[6,17],[6,18],\
+    [6,23],[6,25],[7,11],[7,17],[7,25],[8,12],[8,16],[9,13],[9,14]]
     #どんぐり
-    life_2=[41,42,42,44,43,41,43,42,43,45,43,46,43,47]
+    life_2=[[41,42],[42,44],[43,41],[43,42],[43,45],[43,46],[43,47]]
     #ダイハード
-    life_3=[22,28,23,22,23,23,24,23,24,27,24,28,24,29]
+    life_3=[[22,28],[23,22],[23,23],[24,23],[24,27],[24,28],[24,29]]
     #horizontal_line
     life_4=[]
     for i in range(Y//cell_size):
-        life_4.append((X//cell_size)//2)
-        life_4.append(i)
+        life_4.append([(X//cell_size)//2,i])
+        # life_4.append(i)
     #vertical_line
     life_5=[]
     for i in range(X//cell_size):
-        life_5.append(i)
-        life_5.append((X//cell_size)//2)
-    #ブリーダー　直線型
-    # life_6=[2,2,3,2,4,2,5,2,6,2,7,2,8,2,9,2,11,2,12,2,13,2,14,2,15,2,19,2,20,2,21,2,28,2,29,2,30,2,31,2,32,2,33,2,34,2,35,2,37
-    # ,2,38,2,39,2,40,2,41,2]
+        life_5.append([i,(X//cell_size)//2])
+    life_6=convert.convert(X,Y,cell_size)
 
     A=load_life(life,A)
     while(1):
@@ -149,7 +146,7 @@ def main():
                 if event.key==K_3: load_life(life_3,A)
                 if event.key==K_4: load_life(life_4,A)
                 if event.key==K_5: load_life(life_5,A)
-                if event.key==K_6:pass
+                if event.key==K_6: load_life(life_6,A)
                 if event.key==K_7:pass
                 if event.key==K_8:pass
                 if event.key==K_9:pass
